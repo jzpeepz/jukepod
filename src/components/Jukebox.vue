@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <select v-model="selectedPodcast" @change="changeFeed()">
       <option
         :value="podcast.url"
@@ -58,19 +58,13 @@ export default {
     next() {
       const nextItem = this.items[Math.floor(Math.random() * this.items.length)];
       this.item = nextItem;
-      // audio.setAttribute('src', nextItem.url);
       this.$refs.audio.play();
-
-      // document.querySelector('#juke-title').innerHTML = nextItem.title;
-      // document.querySelector('#juke-summary').innerHTML = nextItem.summary;
       window.localStorage.setItem('juke_guid', nextItem.guid);
     },
     timestampUpdate(event) {
       window.localStorage.setItem('juke_timestamp', event.target.currentTime);
     },
     timestampSet() {
-      // const audio = document.querySelector('audio');
-      // console.log(audio);
       const timestamp = window.localStorage.getItem('juke_timestamp');
 
       if (timestamp > 0) {
@@ -91,11 +85,12 @@ export default {
           return Array.from(items)
             .filter((el) => el.querySelector('*|episodeType').innerHTML === 'full')
             .map((el) => {
-              const summary = el.querySelector('description').innerHTML;
+              // const summary = el.querySelector('description').innerHTML;
+              const summaryText = el.querySelector('*|summary').innerHTML;
               return {
                 title: el.querySelector('title').innerHTML,
-                // summary: el.querySelector('*|summary').innerHTML,
-                summary: summary.replace('<![CDATA[', '').replace(']]>', ''),
+                summary: summaryText,
+                // summary: summary.replace('<![CDATA[', '').replace(']]>', ''),
                 url: el.querySelector('enclosure').getAttribute('url'),
                 guid: el.querySelector('guid').innerHTML,
               };
@@ -125,6 +120,77 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.container {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+figure audio {
+  margin-top: 20px;
+}
+select, button {
+  width: 60%;
+}
 
+button {
+    box-sizing: border-box;
+    border: 0 solid #e2e8f0 /* 2 */;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0 /* 2 */;
+    overflow: visible;
+    text-transform: none;
+    -webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+    padding: 0;
+    cursor: pointer;
+    padding: 0;
+    line-height: inherit;
+    color: inherit;
+    --bg-opacity: 1!important;
+    background-color: #e2e8f0!important;
+    background-color: rgba(226,232,240,var(--bg-opacity))!important;
+    border-radius: .25rem!important;
+    font-weight: 700!important;
+    padding-top: .5rem!important;
+    padding-bottom: .5rem!important;
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
+    --text-opacity: 1!important;
+    color: #2d3748!important;
+    color: rgba(45,55,72,var(--text-opacity))!important;
+}
+
+select {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0 /* 2 */;
+    text-transform: none;
+    -webkit-appearance: none!important;
+    -moz-appearance: none!important;
+    appearance: none!important;
+    --bg-opacity: 1!important;
+    background-color: #edf2f7!important;
+    background-color: rgba(237,242,247,var(--bg-opacity))!important;
+    --border-opacity: 1!important;
+    border-color: #edf2f7!important;
+    border-color: rgba(237,242,247,var(--border-opacity))!important;
+    border-radius: .25rem!important;
+    border-width: 1px!important;
+    display: block!important;
+    line-height: 1.25!important;
+    padding-top: .75rem!important;
+    padding-bottom: .75rem!important;
+    padding-left: 1rem!important;
+    padding-right: 2rem!important;
+    --text-opacity: 1!important;
+    color: #4a5568!important;
+    color: rgba(74,85,104,var(--text-opacity))!important;
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>
