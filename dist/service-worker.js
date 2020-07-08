@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.5cf844257fad68c11dcded2c7642b8a9.js"
+  "/precache-manifest.049035d92ec16cfeb26201e1d37cefa4.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "jukepod"});
