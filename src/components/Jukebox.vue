@@ -29,7 +29,7 @@
                 preload="metadata"
                 :src="item.url"
                 @timeupdate="timestampUpdate"
-                class="ml-auto mr-auto mb-8"
+                class="outline-none ml-auto mr-auto mb-8"
             >
                     Your browser does not support the <code>audio</code> element.
             </audio>
