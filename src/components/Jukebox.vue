@@ -41,7 +41,7 @@
             class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 pl-4 pr-3 rounded flex items-center uppercase"
           >
             <span class="leading-none">Next</span>
-            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="fill-current w-4 h-4 ml-1" viewBox="0 0 256 512">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="fill-current w-3 h-3 ml-1" viewBox="0 0 256 512">
               <path fill="currentColor" d="M17.525 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L205.947 256 10.454 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L34.495 36.465c-4.686-4.687-12.284-4.687-16.97 0z"/>
             </svg>
           </button>
