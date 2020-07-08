@@ -1,16 +1,26 @@
 <template>
-  <div class="container">
-    <select v-model="selectedPodcast" @change="changeFeed()">
-      <option
-        :value="podcast.url"
-        v-for="podcast in podcasts"
-        :key="podcast.url"
-        v-html="podcast.name"
-      ></option>
-    </select>
+  <div class="container flex flex-col items-center">
+    <div class="relative" style="width: 60%;">
+      <select
+        v-model="selectedPodcast"
+        @change="changeFeed()"
+        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      >
+        <option value="" disabled selected>Choose Podcast</option>
+        <option
+          :value="podcast.url"
+          v-for="podcast in podcasts"
+          :key="podcast.url"
+          v-html="podcast.name"
+        ></option>
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+      </div>
+    </div>
 
       <article v-show="item.title.length > 0">
-        <h1 v-html="item.title"></h1>
+        <h1 class="text-4xl my-6" v-html="item.title"></h1>
         <figure>
             <figcaption v-html="item.summary"></figcaption>
             <audio
@@ -18,11 +28,19 @@
                 controls
                 preload="none"
                 :src="item.url"
-                @timeupdate="timestampUpdate">
+                @timeupdate="timestampUpdate"
+                class="ml-auto mr-auto mb-8"
+            >
                     Your browser does not support the <code>audio</code> element.
             </audio>
         </figure>
-        <button @click="next()">Next</button>
+        <button
+          @click="next()"
+          style="width: 60%;"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+        >
+          <span>Next</span>
+        </button>
       </article>
   </div>
 </template>
@@ -31,7 +49,7 @@
 export default {
   data() {
     return {
-      selectedPodcast: null,
+      selectedPodcast: '',
       podcasts: [
         { name: 'Dateline', url: 'https://rss.art19.com/dateline-nbc' },
         { name: 'Doughboys', url: 'https://rss.art19.com/doughboys' },
@@ -128,69 +146,5 @@ export default {
 }
 figure audio {
   margin-top: 20px;
-}
-select, button {
-  width: 60%;
-}
-
-button {
-    box-sizing: border-box;
-    border: 0 solid #e2e8f0 /* 2 */;
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0 /* 2 */;
-    overflow: visible;
-    text-transform: none;
-    -webkit-appearance: button;
-    background-color: transparent;
-    background-image: none;
-    padding: 0;
-    cursor: pointer;
-    padding: 0;
-    line-height: inherit;
-    color: inherit;
-    --bg-opacity: 1!important;
-    background-color: #e2e8f0!important;
-    background-color: rgba(226,232,240,var(--bg-opacity))!important;
-    border-radius: .25rem!important;
-    font-weight: 700!important;
-    padding-top: .5rem!important;
-    padding-bottom: .5rem!important;
-    padding-left: 1rem!important;
-    padding-right: 1rem!important;
-    --text-opacity: 1!important;
-    color: #2d3748!important;
-    color: rgba(45,55,72,var(--text-opacity))!important;
-}
-
-select {
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0 /* 2 */;
-    text-transform: none;
-    -webkit-appearance: none!important;
-    -moz-appearance: none!important;
-    appearance: none!important;
-    --bg-opacity: 1!important;
-    background-color: #edf2f7!important;
-    background-color: rgba(237,242,247,var(--bg-opacity))!important;
-    --border-opacity: 1!important;
-    border-color: #edf2f7!important;
-    border-color: rgba(237,242,247,var(--border-opacity))!important;
-    border-radius: .25rem!important;
-    border-width: 1px!important;
-    display: block!important;
-    line-height: 1.25!important;
-    padding-top: .75rem!important;
-    padding-bottom: .75rem!important;
-    padding-left: 1rem!important;
-    padding-right: 2rem!important;
-    --text-opacity: 1!important;
-    color: #4a5568!important;
-    color: rgba(74,85,104,var(--text-opacity))!important;
-    margin-left: auto;
-    margin-right: auto;
 }
 </style>
