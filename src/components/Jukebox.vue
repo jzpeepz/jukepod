@@ -26,7 +26,7 @@
             <audio
                 ref="audio"
                 controls
-                preload="none"
+                preload="metadata"
                 :src="item.url"
                 @timeupdate="timestampUpdate"
                 class="ml-auto mr-auto mb-8"
