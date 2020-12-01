@@ -133,12 +133,28 @@ export default {
             item = podcasts.find((element) => element.guid === guid);
           }
 
+          // set the metadata in Chrome
+          if ("mediaSession" in navigator) {
+            const podcast = this.getPodcastByUrl(this.selectedPodcast);
+            console.log(podcast);
+            // console.log(this.selectedPodcast);
+            navigator.mediaSession.metadata = new MediaMetadata({
+              title: item.title,
+              artist: podcast.name
+            });
+          }
+
           // store the guid of the current podcast for later loading
           window.localStorage.setItem('juke_guid', guid);
 
           this.item = item;
         });
     },
+    getPodcastByUrl(url) {
+      return this.podcasts.filter((podcast) => {
+        return podcast.url == url;
+      }).shift();
+    }
   },
 };
 </script>
