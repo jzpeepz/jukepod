@@ -72,6 +72,26 @@ export default {
       this.load();
       this.timestampSet();
     }
+
+    // set sction handlers
+    const actionHandlers = [
+      ['play',          () => { this.$refs.audio.play(); }],
+      ['pause',         () => { this.$refs.audio.pause(); }],
+      // ['previoustrack', () => { /* ... */ }],
+      ['nexttrack',     () => { this.next(); }],
+      // ['stop',          () => { /* ... */ }],
+      ['seekbackward',  (details) => { this.$refs.audio.currentTime += 10; }],
+      ['seekforward',   (details) => { this.$refs.audio.currentTime += 30; }],
+      // ['seekto',        (details) => { /* ... */ }],
+    ];
+
+    for (const [action, handler] of actionHandlers) {
+      try {
+        navigator.mediaSession.setActionHandler(action, handler);
+      } catch (error) {
+        console.log(`The media session action "${action}" is not supported yet.`);
+      }
+    }
   },
   methods: {
     reset() {
@@ -83,6 +103,15 @@ export default {
       this.item = nextItem;
       this.$refs.audio.play();
       window.localStorage.setItem('juke_guid', nextItem.guid);
+
+      // set the metadata in Chrome
+      if ("mediaSession" in navigator) {
+        const podcast = this.getPodcastByUrl(this.selectedPodcast);
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: item.title,
+          artist: podcast.name
+        });
+      }
     },
     timestampUpdate(event) {
       window.localStorage.setItem('juke_timestamp', event.target.currentTime);
@@ -136,8 +165,6 @@ export default {
           // set the metadata in Chrome
           if ("mediaSession" in navigator) {
             const podcast = this.getPodcastByUrl(this.selectedPodcast);
-            console.log(podcast);
-            // console.log(this.selectedPodcast);
             navigator.mediaSession.metadata = new MediaMetadata({
               title: item.title,
               artist: podcast.name
